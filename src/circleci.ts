@@ -25,15 +25,21 @@ export class CircleCI {
 
   #fetch<T>(url: string, method: HTTPMethod, body?: object): Promise<T> {
     const headers = new Headers()
-    headers.set('Authorization', `Basic ${this.#token}`)
+    headers.set('Circle-Token', this.#token)
     if (body && method !== HTTPMethod.GET) {
       headers.set('Content-Type', 'application/json')
     }
+    headers.set('Accept', 'application/json')
     return fetch(CircleCI.#BASE_URL + url, {
       method,
       headers,
       body: JSON.stringify(body),
-    }).then(response => response.json()) as Promise<T>
+    }).then((response) => {
+      if (!response.ok) {
+        throw (response.statusText)
+      }
+      return response.json()
+    }) as Promise<T>
   }
 
   /**
@@ -52,7 +58,12 @@ export class CircleCI {
   listProjectEvnVars(): Promise<Array<EnvVar>> {
     return this.#fetch<{
       items: Array<EnvVar>
-    }>(`project/${this.#projectSlug}/envvar`, HTTPMethod.GET).then(json => json.items)
+    }>(`project/${this.#projectSlug}/envvar`, HTTPMethod.GET).then(json => json.items.map((item) => {
+      return {
+        name: item.name,
+        value: item.value,
+      }
+    }))
   }
 
   /**
