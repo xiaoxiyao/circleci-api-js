@@ -22,3 +22,5 @@ jobs:
         cache: 'pnpm'
     - run: pnpm install
     - run: pnpm test
+      env:
+        DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
