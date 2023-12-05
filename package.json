@@ -1,6 +1,6 @@
 {
   "name": "circleci-api-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/bundle.esm.js",
   "type": "module",
