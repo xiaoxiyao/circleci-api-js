@@ -13,5 +13,6 @@ module.exports = {
     '@typescript-eslint',
     'jest',
   ],
+  ignorePatterns: ['/dist'],
   root: true,
 }

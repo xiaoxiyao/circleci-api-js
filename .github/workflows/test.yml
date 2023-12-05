@@ -21,6 +21,7 @@ jobs:
         node-version: '20.x'
         cache: 'pnpm'
     - run: pnpm install
+    - run: pnpm lint
     - run: pnpm test
       env:
         DOTENV_KEY: ${{ secrets.DOTENV_KEY }}

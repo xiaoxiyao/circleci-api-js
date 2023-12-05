@@ -6,14 +6,20 @@ export default {
   output: [
     {
       format: 'cjs',
+      sourcemap: true,
       file: 'dist/bundle.cjs.js',
     },
     {
       format: 'es',
+      sourcemap: true,
       file: 'dist/bundle.esm.js',
     },
   ],
   plugins: [
-    typescript(),
+    typescript({
+      declaration: true,
+      rootDir: 'src',
+      declarationDir: 'dist/types',
+    }),
   ],
 } satisfies RollupOptions

@@ -2,20 +2,32 @@
   "name": "circleci-api-js",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/bundle.esm.js",
   "type": "module",
   "module": "dist/bundle.esm.js",
-  "types": "dist/index.ts",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "require": "./dist/bundle.cjs.js",
+    "import": "./dist/bundle.esm.js",
+    "default": "./dist/bundle.esm.js"
+  },
   "scripts": {
     "test": "jest",
-    "build": "rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript"
+    "lint": "eslint",
+    "build": "rollup --config rollup.config.ts --configPlugin typescript"
   },
   "keywords": [
     "circleci",
-    "api"
+    "api",
+    "typescript"
   ],
   "author": "",
   "license": "MIT",
+  "repository": "https://github.com/xiaoxiyao/circleci-api-js",
+  "bugs": "https://github.com/xiaoxiyao/circleci-api-js/issues",
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@rollup/plugin-typescript": "^11.1.5",
