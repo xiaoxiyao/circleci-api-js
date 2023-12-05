@@ -1,11 +1,12 @@
-name: publish
+name: publish and release
 
 on:
-  release:
-    types: [released]
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,3 +27,11 @@ jobs:
       - run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release:
+    permissions:
+      contents: write
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: softprops/action-gh-release@v1
