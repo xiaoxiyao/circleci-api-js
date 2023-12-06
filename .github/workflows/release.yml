@@ -24,7 +24,7 @@ jobs:
         env:
           DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
       - run: pnpm build
-      - run: pnpm publish --no-git-checks
+      - run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
