@@ -13,22 +13,34 @@ const api = new CircleCI({
 })
 
 describe('project APIs', () => {
-  test('add project envvar', async () => {
+  test('add/modify/delete envvar', async () => {
+    // add
     await api.createProjectEnvVar({
       name: 'testName',
       value: 'testValue',
     })
-    const vars = await api.listProjectEvnVars()
+    let vars = await api.listProjectEvnVars()
     expect(vars).toHaveLength(1)
     expect(vars[0]).toEqual({
       name: 'testName',
       value: 'xxxxalue',
     })
-  })
 
-  test('delete project envvar', async () => {
+    // modify
+    await api.createProjectEnvVar({
+      name: 'testName',
+      value: 'testValue2',
+    })
+    vars = await api.listProjectEvnVars()
+    expect(vars).toHaveLength(1)
+    expect(vars[0]).toEqual({
+      name: 'testName',
+      value: 'xxxxlue2',
+    })
+
+    // delete
     await api.deleteProjectEnvVar('testName')
-    const vars = await api.listProjectEvnVars()
+    vars = await api.listProjectEvnVars()
     expect(vars).toHaveLength(0)
   })
 })
